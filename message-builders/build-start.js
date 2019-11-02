@@ -2,7 +2,7 @@ const github = require('@actions/github');
 
 module.exports = () => {
   const context = github.context;
-  const commitMessage = context.payload.head_commit ? context.payload.head_commit.message : '',
+  const commitMessage = context.payload.head_commit ? context.payload.head_commit.message : '';
 
   return {
     title: `${process.env.GITHUB_REPOSITORY} Build Started`,

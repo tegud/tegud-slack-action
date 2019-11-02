@@ -10,7 +10,7 @@ const statusColors = {
 module.exports = () => {
   const context = github.context;
   const { status = 'unknown' } = JSON.parse(process.env.JOB_CONTEXT || {});
-  const commitMessage = context.payload.head_commit ? context.payload.head_commit.message : '',
+  const commitMessage = context.payload.head_commit ? context.payload.head_commit.message : '';
 
   return {
     title: `${process.env.GITHUB_REPOSITORY} Build Finished - ${status}`,
