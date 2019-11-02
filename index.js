@@ -27,7 +27,7 @@ const post = ({ webhookUrl, data }) => {
         const result = Buffer.concat(chunks).toString();
         console.info(`HTTP END (${res.statusCode})`);
         if (res.statusCode === 302) {
-          console.info(`Redirected to: ${res.getHeader('Location')}`);
+          console.info(res.headers);
         }
         console.log(result);
 
