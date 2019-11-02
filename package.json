@@ -16,9 +16,5 @@
   "bugs": {
     "url": "https://github.com/tegud/tegud-slack-action/issues"
   },
-  "homepage": "https://github.com/tegud/tegud-slack-action#readme",
-  "dependencies": {
-    "@actions/core": "^1.2.0",
-    "@actions/github": "^1.1.0"
-  }
+  "homepage": "https://github.com/tegud/tegud-slack-action#readme"
 }
