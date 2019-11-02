@@ -7,13 +7,10 @@ const post = ({ webhookUrl, data }) => {
     const jsonData = JSON.stringify(data);
     const url = new URL(webhookUrl);
 
-    console.info(url.host);
-    console.info(url.path);
-  
     const options = {
       hostname: url.host,
       port: 443,
-      path: url.path,
+      path: url.pathname,
       method: "POST",
       headers: {
         "Content-Type": "application/json; charset=utf-8",
