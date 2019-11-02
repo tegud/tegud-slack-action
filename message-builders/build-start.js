@@ -2,6 +2,7 @@ const github = require('@actions/github');
 
 module.exports = () => {
   const context = github.context;
+  console.log(context);
 
   return {
     text: `${process.env.GITHUB_REPOSITORY} Build Started`,
@@ -27,11 +28,11 @@ module.exports = () => {
         value: process.env.GITHUB_WORKFLOW,
         short: true,
       },
-      {
+      ...(context.head_commit ? [{
         title: "Commit Message",
         value: context.head_commit.message,
         short: false,
-      }
+      }] : []),
     ],
   };
 };
