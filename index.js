@@ -1,6 +1,8 @@
 const https = require("https");
 
 const post = ({ webhookUrl, data }) => {
+  console.info('HTTP Begin');
+  
   return new Promise((resolve, reject) => {
     const jsonData = JSON.stringify(data);
     const url = new URL(webhookUrl);
@@ -22,14 +24,20 @@ const post = ({ webhookUrl, data }) => {
       });
 
       res.on("end", () => {
+        const result = Buffer.concat(chunks).toString();
+        console.info(`HTTP END (${res.statusCode})`);
+        console.log(result);
+
         resolve({
           statusCode: res.statusCode,
-          result: Buffer.concat(chunks).toString()
+          result,
         });
       });
     });
 
     req.on("error", error => {
+      console.info('HTTP Error');
+
       reject(error);
     });
 
@@ -58,7 +66,7 @@ const sendMessage = () => post({
 
 (async () => {
   try {
-    console.log(`Sending build status to slack`);
+    console.log(`Sending build status to slacCk`);
     await sendMessage();
   } catch (e) {
     console.error(e.message);
