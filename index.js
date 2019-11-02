@@ -2,6 +2,8 @@ const https = require("https");
 
 const post = ({ webhookUrl, data }) => {
   console.info('HTTP Begin');
+  console.info(url.host);
+  console.info(url.path);
   
   return new Promise((resolve, reject) => {
     const jsonData = JSON.stringify(data);
