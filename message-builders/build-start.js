@@ -2,10 +2,11 @@ const github = require('@actions/github');
 
 module.exports = () => {
   const context = github.context;
-  console.log(context);
+  const commitMessage = context.payload.head_commit ? context.payload.head_commit.message : '',
 
   return {
-    text: `${process.env.GITHUB_REPOSITORY} Build Started`,
+    title: `${process.env.GITHUB_REPOSITORY} Build Started`,
+    text: commitMessage,
     color: 'warning',
     fields: [
       {
@@ -15,7 +16,7 @@ module.exports = () => {
       },
       {
         title: "SHA",
-        value: process.env.GITHUB_SHA,
+        value: process.env.GITHUB_SHA ? process.env.GITHUB_SHA.substring(0, 7) : '',
         short: true,
       },
       {

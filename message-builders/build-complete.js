@@ -10,12 +10,12 @@ const statusColors = {
 module.exports = () => {
   const context = github.context;
   const { status = 'unknown' } = JSON.parse(process.env.JOB_CONTEXT || {});
-
-  console.log(context);
+  const commitMessage = context.payload.head_commit ? context.payload.head_commit.message : '',
 
   return {
-    text: `${process.env.GITHUB_REPOSITORY} Build Finished - ${status}`,
+    title: `${process.env.GITHUB_REPOSITORY} Build Finished - ${status}`,
     color: statusColors[status.toLowerCase()],
+    text: commitMessage,
     fields: [
       {
         title: "Ref",
@@ -24,7 +24,7 @@ module.exports = () => {
       },
       {
         title: "SHA",
-        value: process.env.GITHUB_SHA ? process.env.GITHUB_SHA.substring(7) : '',
+        value: process.env.GITHUB_SHA ? process.env.GITHUB_SHA.substring(0, 7) : '',
         short: true,
       },
       {
