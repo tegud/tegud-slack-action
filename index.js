@@ -2,12 +2,14 @@ const https = require("https");
 
 const post = ({ webhookUrl, data }) => {
   console.info('HTTP Begin');
-  console.info(url.host);
-  console.info(url.path);
   
   return new Promise((resolve, reject) => {
     const jsonData = JSON.stringify(data);
     const url = new URL(webhookUrl);
+
+    console.info(url.host);
+    console.info(url.path);
+  
     const options = {
       hostname: url.host,
       port: 443,
