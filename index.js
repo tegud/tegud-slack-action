@@ -1,4 +1,13 @@
 const https = require("https");
+const core = require("@actions/core");
+
+const buildStart = require('./message-builders/build-start');
+const buildComplete = require('./message-builders/build-complete');
+
+const messageBuilders = {
+  'build-start': buildStart,
+  'build-complete': buildComplete,
+};
 
 const post = ({ webhookUrl, data }) => {
   console.info('HTTP Begin');
@@ -50,28 +59,24 @@ const post = ({ webhookUrl, data }) => {
   });
 };
 
-const sendMessage = () => post({
+const sendMessage = (message) => post({
   webhookUrl: process.env.SLACK_WEBHOOK_URL,
   data: {
     attachments: [
-      {
-        text: "This is a test message, ignore",
-        fields: [
-          {
-            "title": "Test",
-            "value": "Test Message",
-            "short": false
-          },
-        ],
-      },
+      message,
     ],
   },
 });
 
 (async () => {
   try {
-    console.log(process.env.JOB_CONTEXT);
-    await sendMessage();
+    const event = core.getInput('event', { required: true });
+
+    if (!messageBuilders[event]) {
+      return;
+    }
+
+    await sendMessage(messageBuilders[event]());
   } catch (e) {
     console.error(e.message);
   }
