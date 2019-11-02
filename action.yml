@@ -1,0 +1,8 @@
+name: "Slack Build Notifications"
+description: "Build Centric Slack Notifications"
+branding:
+  icon: "message-circle"
+  color: blue
+runs:
+  using: "node12"
+  main: "index.js"
