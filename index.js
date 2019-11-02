@@ -39,7 +39,7 @@ const post = ({ webhookUrl, data }) => {
 };
 
 const sendMessage = () => post({
-  url: process.env.SLACK_WEBHOOK_URL,
+  webhookUrl: process.env.SLACK_WEBHOOK_URL,
   data: {
     attachments: [
       {
