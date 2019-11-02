@@ -1,6 +1,4 @@
 const https = require("https");
-const core = require("@actions/core");
-const github = require('@actions/github');
 
 const post = ({ webhookUrl, data }) => {
   console.info('HTTP Begin');
@@ -72,8 +70,6 @@ const sendMessage = () => post({
 
 (async () => {
   try {
-    const context = github.context;
-    console.log(context);
     console.log(JSON.stringify(process.env, null, 4));
     await sendMessage();
   } catch (e) {
