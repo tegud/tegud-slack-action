@@ -15,7 +15,7 @@ module.exports = () => {
 
   return {
     text: `${process.env.GITHUB_REPOSITORY} Build Finished - ${status}`,
-    color: statusColors[status],
+    color: statusColors[status.toLowerCase()],
     fields: [
       {
         title: "Ref",
@@ -24,7 +24,7 @@ module.exports = () => {
       },
       {
         title: "SHA",
-        value: process.env.GITHUB_SHA,
+        value: process.env.GITHUB_SHA ? process.env.GITHUB_SHA.substring(7) : '',
         short: true,
       },
       {
@@ -37,9 +37,9 @@ module.exports = () => {
         value: process.env.GITHUB_WORKFLOW,
         short: true,
       },
-      ...(context.head_commit ? [{
+      ...(context.payload.head_commit ? [{
         title: "Commit Message",
-        value: context.head_commit.message,
+        value: context.payload.head_commit.message,
         short: false,
       }] : []),
     ],
