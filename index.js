@@ -58,6 +58,7 @@ const sendMessage = () => post({
 
 (async () => {
   try {
+    console.log(`Sending build status to slack`);
     await sendMessage();
   } catch (e) {
     console.error(e.message);
