@@ -57,5 +57,9 @@ const sendMessage = () => post({
 });
 
 (async () => {
-  await sendMessage();
+  try {
+    await sendMessage();
+  } catch (e) {
+    console.error(e.message);
+  }
 })();
