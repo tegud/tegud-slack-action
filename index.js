@@ -1,7 +1,44 @@
-const axios = require('axios');
+const https = require("https");
 
-const sendMessage = () => axios({
-  method: 'POST',
+const post = ({ webhookUrl, data }) => {
+  return new Promise((resolve, reject) => {
+    const jsonData = JSON.stringify(data);
+    const url = new url(webhookUrl);
+    const options = {
+      hostname: url.host,
+      port: 443,
+      path: url.path,
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+      }
+    };
+
+    const req = https.request(options, res => {
+      const chunks = [];
+
+      res.on("data", chunk => {
+        chunks.push(chunk);
+      });
+
+      res.on("end", () => {
+        resolve({
+          statusCode: res.statusCode,
+          result: Buffer.concat(chunks).toString()
+        });
+      });
+    });
+
+    req.on("error", error => {
+      reject(error);
+    });
+
+    req.write(jsonData);
+    req.end();
+  });
+};
+
+const sendMessage = () => post({
   url: process.env.SLACK_WEBHOOK_URL,
   data: {
     attachments: [
