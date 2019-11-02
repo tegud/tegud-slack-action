@@ -44,7 +44,7 @@ const post = ({ webhookUrl, data }) => {
       reject(error);
     });
 
-    req.write(jsonData);
+    req.write(`payload=${jsonData}`);
     req.end();
   });
 };
