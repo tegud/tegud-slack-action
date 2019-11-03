@@ -1,13 +1,6 @@
 const https = require("https");
-const core = require("@actions/core");
 
-const buildStart = require('./message-builders/build-start');
-const buildComplete = require('./message-builders/build-complete');
-
-const messageBuilders = {
-  'build-start': buildStart,
-  'build-complete': buildComplete,
-};
+const buildStatus = require('./message-builders/build-status');
 
 const post = ({ webhookUrl, data }) => {
   console.info('HTTP Begin');
@@ -70,13 +63,7 @@ const sendMessage = (message) => post({
 
 (async () => {
   try {
-    const event = core.getInput('event', { required: true });
-
-    if (!messageBuilders[event]) {
-      return;
-    }
-
-    await sendMessage(messageBuilders[event]());
+    await sendMessage(buildStatus());
   } catch (e) {
     console.error(e.message);
   }
