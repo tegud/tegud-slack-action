@@ -6,9 +6,6 @@ module.exports = {
     const environment = core.getInput('environment', { required: false });
     const { status = 'Unknown' } = JSON.parse(process.env.JOB_CONTEXT || {});
 
-    console.log(event);
-    console.log(process.env.JOB_CONTEXT);
-
     return {
       event,
       environment,
