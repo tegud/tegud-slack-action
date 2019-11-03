@@ -8,7 +8,7 @@ module.exports = () => {
   const jobContext = getJobContext();
 
   return {
-    title: `${environmentContext.repository} ${environmentContext.environment ? `${environmentContext.environment} ` : ''}Build Started`,
+    title: `${commitContext.repository} ${jobContext.environment ? `${jobContext.environment} ` : ''}Build Started`,
     text: commitContext.message,
     color: 'warning',
     fields: [
