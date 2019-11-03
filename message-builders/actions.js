@@ -1,7 +1,7 @@
 module.exports = {
-  getViewInGithubButton: (environmentContext) => ({
+  getViewInGithubButton: (commitContext) => ({
     type: 'button',
     text: 'View in GitHub',
-    url: `https://github.com/${environmentContext.repository}/commit/${environmentContext.sha}/checks`,
+    url: `https://github.com/${commitContext.repository}/commit/${commitContext.sha}/checks`,
   }),
 };

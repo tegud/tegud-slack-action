@@ -22,7 +22,7 @@ module.exports = {
       short = true,
     }) => ({
       title,
-      value: valueMapper(commitContext, contexts[context], field),
+      value: valueMapper(contexts[context], field),
       short,
     }));
   }
