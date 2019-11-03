@@ -1,22 +1,21 @@
-const github = require('@actions/github');
-const { getEnvironmentContext } = require('../context/environment');
+const { getCommitContext } = require('../context/commit');
+const { getJobContext } = require('../context/job');
 const { getCommitFields } = require('./commit-fields');
 const { getViewInGithubButton } = require('./actions');
 
 module.exports = () => {
-  const context = github.context;
-  const commitMessage = context.payload.head_commit ? context.payload.head_commit.message : '';
-  const environmentContext = getEnvironmentContext();
+  const commitContext = getCommitContext();
+  const jobContext = getJobContext();
 
   return {
     title: `${environmentContext.repository} ${environmentContext.environment ? `${environmentContext.environment} ` : ''}Build Started`,
-    text: commitMessage,
+    text: commitContext.message,
     color: 'warning',
     fields: [
-      ...getCommitFields(environmentContext),
+      ...getCommitFields(commitContext, jobContext),
     ],
     actions: [
-      getViewInGithubButton(environmentContext),
+      getViewInGithubButton(commitContext, jobContext),
     ],
   };
 };

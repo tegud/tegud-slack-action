@@ -1,5 +1,5 @@
-const github = require('@actions/github');
-const { getEnvironmentContext } = require('../context/environment');
+const { getCommitContext } = require('../context/commit');
+const { getJobContext } = require('../context/job');
 const { getCommitFields } = require('./commit-fields');
 const { getViewInGithubButton } = require('./actions');
 
@@ -11,20 +11,20 @@ const statusColors = {
 };
 
 module.exports = () => {
-  const context = github.context;
-  const { status = 'unknown' } = JSON.parse(process.env.JOB_CONTEXT || {});
-  const commitMessage = context.payload.head_commit ? context.payload.head_commit.message : '';
-  const environmentContext = getEnvironmentContext();
+  const commitContext = getCommitContext();
+  const jobContext = getJobContext();
 
+  const { status } = jobContext;
+  
   return {
-    title: `${environmentContext.repository} ${environmentContext.environment ? `${environmentContext.environment} ` : ''}Build Finished - ${status}`,
+    title: `${commitContext.repository} ${commitContext.environment ? `${commitContext.environment} ` : ''}Build Finished - ${status}`,
     color: statusColors[status.toLowerCase()],
-    text: commitMessage,
+    text: commitContext.message,
     fields: [
-      ...getCommitFields(environmentContext),
+      ...getCommitFields(commitContext, jobContext),
     ],
     actions: [
-      getViewInGithubButton(environmentContext),
+      getViewInGithubButton(commitContext, jobContext),
     ],
   };
 };
