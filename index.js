@@ -3,8 +3,6 @@ const https = require("https");
 const buildStatus = require('./message-builders/build-status');
 
 const post = ({ webhookUrl, data }) => {
-  console.info('HTTP Begin');
-  
   return new Promise((resolve, reject) => {
     const jsonData = JSON.stringify(data);
     const url = new URL(webhookUrl);
@@ -32,7 +30,6 @@ const post = ({ webhookUrl, data }) => {
         if (res.statusCode === 302) {
           console.info(res.headers);
         }
-        console.log(result);
 
         resolve({
           statusCode: res.statusCode,
@@ -42,8 +39,6 @@ const post = ({ webhookUrl, data }) => {
     });
 
     req.on("error", error => {
-      console.info('HTTP Error');
-
       reject(error);
     });
 
